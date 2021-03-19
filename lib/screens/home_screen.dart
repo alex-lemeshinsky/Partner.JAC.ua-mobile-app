@@ -8,17 +8,19 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 class HomeScreen extends StatelessWidget {
   int getCrossAxisCount(context) {
     int crossAxisCount;
-    if (MediaQuery.of(context).size.width < 800) {
+    if (MediaQuery.of(context).size.width < 600) {
       crossAxisCount = 1;
-    } else if (MediaQuery.of(context).size.width >= 800) {
+    } else if (MediaQuery.of(context).size.width >= 600 &&
+        MediaQuery.of(context).size.width < 1000) {
       crossAxisCount = 2;
+    } else if (MediaQuery.of(context).size.width >= 1000) {
+      crossAxisCount = 3;
     }
     return crossAxisCount;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
     return Scaffold(
       appBar: AppBar(
         title: Text("Partner.JAC.ua"),
@@ -42,27 +44,31 @@ class HomeScreen extends StatelessWidget {
             "images/technology.webp",
             "/technology",
             null,
+            getCrossAxisCount(context),
           ),
           MainCard(
             "Організація",
-            "Правільна організація сервсу є основою для задоволенності клієнтів та прибутковості дилера або сервісного партрнера.",
+            "Правильна організація сервсу є основою для задоволенності клієнтів та прибутковості дилера або сервісного партрнера.",
             "images/organization.webp",
             "/organization",
             null,
+            getCrossAxisCount(context),
           ),
           MainCard(
             "Процеси",
-            "Оновою эффективних процесів на дилерському підприєтсві є регламанети. Слідуючи регламентам Ви достягнете успіху.",
+            "Оновою эффективних процесів на дилерському підприєтсві є регламанети.",
             "images/process.webp",
             "/process",
             null,
+            getCrossAxisCount(context),
           ),
           MainCard(
             "Звітність",
             "Звітніть є основю для сбору статистики та подальшого аналізу та планування ринку",
             "images/reporting.webp",
             "/reporting",
-            "",
+            null,
+            getCrossAxisCount(context),
           ),
           MainCard(
             "Проекти",
@@ -70,6 +76,7 @@ class HomeScreen extends StatelessWidget {
             "images/projects.webp",
             "/projects",
             null,
+            getCrossAxisCount(context),
           ),
           MainCard(
             "Навчання",
@@ -77,6 +84,7 @@ class HomeScreen extends StatelessWidget {
             "images/training.webp",
             "/trainings",
             null,
+            getCrossAxisCount(context),
           ),
         ],
         staggeredTiles: const <StaggeredTile>[

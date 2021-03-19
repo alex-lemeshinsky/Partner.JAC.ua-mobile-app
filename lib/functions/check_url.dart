@@ -15,11 +15,10 @@ void checkURL(context, url, controller) {
   } else if (url == "https://jacua.org/processes/") {
     controller.goBack();
     Navigator.pushNamed(context, "/process");
-  }
-  /*else if (url == "https://jacua.org/reporting/") {
+  } else if (url == "https://jacua.org/reporting/") {
     controller.goBack();
     Navigator.pushNamed(context, "/reporting");
-  } else if (url == "https://jacua.org/projects/") {
+  } /*else if (url == "https://jacua.org/projects/") {
     controller.goBack();
     Navigator.pushNamed(context, "/projects");
   } else if (url == "https://jacua.org/trainings/") {

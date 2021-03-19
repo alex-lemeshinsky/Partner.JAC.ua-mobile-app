@@ -4,8 +4,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:jacua/widgets/main_popup_menu_button.dart';
 import 'package:jacua/widgets/data_search.dart';
 import 'package:jacua/functions/wp-api.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class PdiScreen extends StatefulWidget {
   @override
@@ -51,9 +51,8 @@ class _PdiScreenState extends State<PdiScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: HtmlWidget(
-                  page,
-                  textStyle: TextStyle(fontSize: 15),
+                child: Html(
+                  data: page,
                 ),
               ),
               TextButton(

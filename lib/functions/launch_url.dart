@@ -15,6 +15,7 @@ Future launchURL(BuildContext context, String url) async {
           'org.gnu.icecat',
           'org.mozilla.firefox',
           'com.microsoft.emmx',
+          'com.sec.android.app.sbrowser',
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:jacua/widgets/main_popup_menu_button.dart';
 import 'package:jacua/widgets/data_search.dart';
 import 'package:jacua/widgets/main_card.dart';
 import 'package:jacua/constants/cars.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class TechnologyScreen extends StatefulWidget {
   @override
@@ -13,6 +14,25 @@ class TechnologyScreen extends StatefulWidget {
 class _TechnologyScreenState extends State<TechnologyScreen> {
   @override
   Widget build(BuildContext context) {
+    if (!models.contains("Технічні бюлетені")) {
+      models.add("Технічні бюлетені");
+      models.add("Спеціальний інструмент");
+      models.add("Коди красок");
+    }
+
+    int getCrossAxisCount(context) {
+      int crossAxisCount;
+      if (MediaQuery.of(context).size.width < 600) {
+        crossAxisCount = 1;
+      } else if (MediaQuery.of(context).size.width >= 600 &&
+          MediaQuery.of(context).size.width < 1000) {
+        crossAxisCount = 2;
+      } else if (MediaQuery.of(context).size.width >= 1000) {
+        crossAxisCount = 3;
+      }
+      return crossAxisCount;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Partner.JAC.ua"),
@@ -27,7 +47,10 @@ class _TechnologyScreenState extends State<TechnologyScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body: ListView.builder(
+      body: StaggeredGridView.countBuilder(
+        crossAxisCount: getCrossAxisCount(context),
+        itemCount: models.length,
+        staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
         itemBuilder: (BuildContext context, int index) {
           return MainCard(
             "Технологія ${models[index]}",
@@ -35,9 +58,9 @@ class _TechnologyScreenState extends State<TechnologyScreen> {
             "images/${models[index]}.jpg",
             "/technology/${models[index]}",
             models[index],
+            getCrossAxisCount(context),
           );
         },
-        itemCount: models.length,
       ),
     );
   }

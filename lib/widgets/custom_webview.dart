@@ -5,7 +5,6 @@ import 'package:jacua/functions/check_url.dart';
 import 'main_popup_menu_button.dart';
 import 'data_search.dart';
 import 'main_drawer.dart';
-//import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 class CustomWebView extends StatefulWidget {
   final String question;
@@ -24,38 +23,8 @@ class _CustomWebViewState extends State<CustomWebView> {
 
   _CustomWebViewState(this.question);
 
-  /*void _launchURL(BuildContext context) async {
-    try {
-      await launch(
-        'https://jacua.org/application/',
-        option: new CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: new CustomTabsAnimation.slideIn(),
-          extraCustomTabs: <String>[
-            'org.gnu.icecat',
-            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-            'org.mozilla.firefox',
-            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-            'com.microsoft.emmx',
-          ],
-        ),
-      );
-    } catch (e) {
-      // An exception is thrown if browser app is not installed on Android device.
-      debugPrint(e.toString());
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
-    /*_launchURL(context);
-    return Container(
-      width: 0,
-      height: 0,
-    );*/
     return Scaffold(
       appBar: AppBar(
         title: Text("Partner.JAC.ua"),

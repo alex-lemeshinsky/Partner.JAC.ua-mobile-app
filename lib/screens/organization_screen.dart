@@ -18,9 +18,13 @@ class _OrganizationScreenState extends State<OrganizationScreen> {
 
   void getContent() async {
     content = await fetchOrganizationPage();
-    setState(() {
-      showSpinner = false;
-    });
+    try {
+      setState(() {
+        showSpinner = false;
+      });
+    } catch (e) {
+      print(e);
+    }
     var box = Hive.box('jac');
     box.put('organization', content);
   }
@@ -75,7 +79,7 @@ class _OrganizationScreenState extends State<OrganizationScreen> {
     );
   }
 
-  List getPages(int index) {
+  List<Widget> getPages(int index) {
     List<Widget> pages = [
       Padding(
         padding: const EdgeInsets.only(top: 15, left: 15),

@@ -18,9 +18,13 @@ class _ProcessScreenState extends State<ProcessScreen> {
 
   void getContent() async {
     content = await fetchProcessPage();
-    setState(() {
-      showSpinner = false;
-    });
+    try {
+      setState(() {
+        showSpinner = false;
+      });
+    } catch (e) {
+      print(e);
+    }
     var box = Hive.box('jac');
     box.put('process', content);
   }
@@ -75,7 +79,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
     );
   }
 
-  List getPages(int index) {
+  List<Widget> getPages(int index) {
     List<Widget> pages = [
       Padding(
         padding: const EdgeInsets.only(top: 15, left: 15),
@@ -93,14 +97,17 @@ class _ProcessScreenState extends State<ProcessScreen> {
         ListTile(
           title: Text(page["name"]),
           onTap: () async {
-            if (page["url"][0] != "/") {
-              try {
-                await launchURL(context, page["url"]);
-              } catch (e) {
-                print(e);
+            try {
+              if (page["url"][0] != "/" && page["url"] != "") {
+                try {
+                  await launchURL(context, page["url"]);
+                } catch (e) {}
+              } else if (page["url"][0] == "/") {
+                Navigator.pushNamed(context, page["url"]);
               }
-            } else if (page["url"][0] == "/") {
-              Navigator.pushNamed(context, page["url"]);
+            } catch (e) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('Помилка!')));
             }
           },
         ),

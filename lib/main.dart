@@ -8,7 +8,6 @@ import 'package:jacua/screens/reporting_screen.dart';
 import 'package:jacua/screens/projects_screen.dart';
 import 'package:jacua/screens/trainings_screen.dart';
 import 'package:jacua/screens/command_ppo.dart';
-//import 'widgets/custom_webview.dart';
 import 'screens/support_screen.dart';
 import 'screens/pdi_screen.dart';
 import 'package:hive/hive.dart';
@@ -29,6 +28,9 @@ class JAC extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
       ),
       routes: {
         "/": (context) => HomeScreen(),

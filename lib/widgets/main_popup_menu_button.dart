@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jacua/functions/launch_url.dart';
 
 class MainPopupMenuButton extends StatelessWidget {
   @override
@@ -19,11 +20,19 @@ class MainPopupMenuButton extends StatelessWidget {
           child: Text("Технічна допомога"),
         ),
       ],
-      onSelected: (value) {
-        Navigator.pushNamed(
-          context,
-          value,
-        );
+      onSelected: (String value) async {
+        if (value == "/process/help") {
+          Navigator.pushNamed(
+            context,
+            value,
+          );
+        } else {
+          try {
+            await launchURL(context, "https://jacua.org$value/#main");
+          } catch (e) {
+            print(e);
+          }
+        }
       },
     );
   }
