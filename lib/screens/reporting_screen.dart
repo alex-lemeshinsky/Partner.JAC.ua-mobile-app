@@ -9,6 +9,7 @@ import 'package:jacua/constants/cars.dart';
 import 'package:jacua/widgets/main_dialog.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:jacua/functions/wp-api.dart';
+import 'dart:convert';
 
 class ReportingScreen extends StatefulWidget {
   @override
@@ -44,6 +45,9 @@ class _ReportingScreenState extends State<ReportingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> _models = models;
+    _models.add("value");
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Partner.JAC.ua"),
@@ -111,26 +115,28 @@ class _ReportingScreenState extends State<ReportingScreen> {
                 },
                 onChanged: (String value) {
                   try {
-                    if (value[9].toUpperCase() == "D") {
-                      _year = "2013";
-                    } else if (value[9].toUpperCase() == "E") {
-                      _year = "2014";
-                    } else if (value[9].toUpperCase() == "F") {
-                      _year = "2015";
-                    } else if (value[9].toUpperCase() == "G") {
-                      _year = "2016";
-                    } else if (value[9].toUpperCase() == "H") {
-                      _year = "2017";
-                    } else if (value[9].toUpperCase() == "J") {
-                      _year = "2018";
-                    } else if (value[9].toUpperCase() == "K") {
-                      _year = "2019";
-                    } else if (value[9].toUpperCase() == "L") {
-                      _year = "2020";
-                    } else if (value[9].toUpperCase() == "M") {
-                      _year = "2021";
-                    } else if (value[9].toUpperCase() == "N") {
-                      _year = "2022";
+                    if (value.length > 9) {
+                      if (value[9].toUpperCase() == "D") {
+                        _year = "2013";
+                      } else if (value[9].toUpperCase() == "E") {
+                        _year = "2014";
+                      } else if (value[9].toUpperCase() == "F") {
+                        _year = "2015";
+                      } else if (value[9].toUpperCase() == "G") {
+                        _year = "2016";
+                      } else if (value[9].toUpperCase() == "H") {
+                        _year = "2017";
+                      } else if (value[9].toUpperCase() == "J") {
+                        _year = "2018";
+                      } else if (value[9].toUpperCase() == "K") {
+                        _year = "2019";
+                      } else if (value[9].toUpperCase() == "L") {
+                        _year = "2020";
+                      } else if (value[9].toUpperCase() == "M") {
+                        _year = "2021";
+                      } else if (value[9].toUpperCase() == "N") {
+                        _year = "2022";
+                      }
                     }
                   } catch (e) {}
                 },
@@ -138,7 +144,7 @@ class _ReportingScreenState extends State<ReportingScreen> {
               SizedBox(height: 8),
               DropdownButtonFormField(
                 decoration: InputDecoration(labelText: "Модель автомобіля"),
-                items: models.map<DropdownMenuItem<String>>(
+                items: _models.map<DropdownMenuItem<String>>(
                   (String value) {
                     return DropdownMenuItem<String>(
                       child: Text(value),
@@ -273,13 +279,17 @@ class _ReportingScreenState extends State<ReportingScreen> {
               ElevatedButton(
                 child: Text("ВІДПРАВИТИ"),
                 onPressed: () async {
-                  if (_formKey.currentState.validate()) {
+                  if (!_formKey.currentState.validate()) {
                     //return;
                   }
 
+                  setState(() {
+                    showSpinner = true;
+                  });
+
                   _formKey.currentState.save();
 
-                  await postReport(
+                  var responce = await postReport(
                     _dateTime.toString().substring(0, 10),
                     _vin,
                     _year,
@@ -291,6 +301,19 @@ class _ReportingScreenState extends State<ReportingScreen> {
                     _dealerName,
                     _email,
                   );
+
+                  Map parsedResponce = jsonDecode(responce.body);
+
+                  setState(() {
+                    showSpinner = false;
+                  });
+                  if (parsedResponce["status"] == "mail_sent") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Успішно надіслано!')));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Помилка! ${parsedResponce["status"]}')));
+                  }
                 },
               ),
             ],

@@ -14,10 +14,12 @@ class TechnologyScreen extends StatefulWidget {
 class _TechnologyScreenState extends State<TechnologyScreen> {
   @override
   Widget build(BuildContext context) {
-    if (!models.contains("Технічні бюлетені")) {
-      models.add("Технічні бюлетені");
-      models.add("Спеціальний інструмент");
-      models.add("Коди красок");
+    List<String> _models = models;
+
+    if (!_models.contains("Технічні бюлетені")) {
+      _models.add("Технічні бюлетені");
+      _models.add("Спеціальний інструмент");
+      _models.add("Коди красок");
     }
 
     int getCrossAxisCount(context) {
@@ -49,15 +51,15 @@ class _TechnologyScreenState extends State<TechnologyScreen> {
       drawer: MainDrawer(),
       body: StaggeredGridView.countBuilder(
         crossAxisCount: getCrossAxisCount(context),
-        itemCount: models.length,
+        itemCount: _models.length,
         staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
         itemBuilder: (BuildContext context, int index) {
           return MainCard(
-            "Технологія ${models[index]}",
+            "Технологія ${_models[index]}",
             null,
-            "images/${models[index]}.jpg",
-            "/technology/${models[index]}",
-            models[index],
+            "images/${_models[index]}.jpg",
+            "/technology/${_models[index]}",
+            _models[index],
             getCrossAxisCount(context),
           );
         },

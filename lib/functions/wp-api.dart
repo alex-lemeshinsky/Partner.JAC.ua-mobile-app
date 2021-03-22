@@ -44,11 +44,13 @@ dynamic fetchPdiPage() async {
         "Authorization": "Basic YWxlbWVzaGluc2t5OlBkZVpTZzZOI3NCMSFGWms=",
       });
   var convertedData = jsonDecode(responce.body);
-  var page = "";
-  if (convertedData[14]["slug"] == "pdi") {
-    page = convertedData[14]["content"]["rendered"];
+  var responcedPage = "";
+  for (var page in convertedData) {
+    if (page["id"] == 96) {
+      responcedPage = page["content"]["rendered"];
+    }
   }
-  return page;
+  return responcedPage;
 }
 
 dynamic postReport(
@@ -63,35 +65,10 @@ dynamic postReport(
   String dealerName,
   String email,
 ) async {
-  print(
-    laborTypeSelected
-        .toString()
-        .substring(1)
-        .split('')
-        .reversed
-        .join()
-        .substring(1)
-        .split('')
-        .reversed
-        .join(),
-  );
-  print(
-    laborDetailsSelected
-        .toString()
-        .substring(1)
-        .split('')
-        .reversed
-        .join()
-        .substring(1)
-        .split('')
-        .reversed
-        .join(),
-  );
   Uri url = Uri.https(
     "jacua.org",
     "/wp-json/contact-form-7/v1/contact-forms/1228/feedback",
   );
-  // ignore: unused_local_variable
   var response = await post(
     url,
     body: {
@@ -125,6 +102,9 @@ dynamic postReport(
       "your-email": email,
     },
   );
-  /*print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');*/
+
+  print(response.request);
+  print(response.statusCode);
+  print(response.body);
+  return response;
 }
