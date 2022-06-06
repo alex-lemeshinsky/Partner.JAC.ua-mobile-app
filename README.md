@@ -1,3 +1,5 @@
+![App icon](android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+
 # jacua
 
 A mobile application built with Flutter.
